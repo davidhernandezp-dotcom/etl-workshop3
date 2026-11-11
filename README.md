@@ -77,10 +77,7 @@ Invalid events are stored in the raw table, skipped from prediction, and **never
 - Views for BI: `vw_predictions` (flattened facts + dimensions) and `vw_event_status`.
 
 ## 6. Dashboard (Power BI)
-Power BI connects through **ODBC to `storage/happiness.db`** (not CSV files) and reads the views `vw_predictions` and `vw_event_status`. Connection steps, DAX measures and visual configuration: `dashboards/powerbi/GUIA_POWERBI.md` and `measures.dax`.
-
-![Page 1: Predictions](dashboards/dashboard_pagina1_predicciones.png)
-![Page 2: Stream quality](dashboards/dashboard_pagina2_calidad_stream.png)
+Power BI connects through **ODBC to `storage/happiness.db`** (not CSV files) and reads the views `vw_predictions` and `vw_event_status`. The DAX measures are in `dashboards/powerbi/measures.dax` and the dashboard file is `dashboards/powerbi/workshop3.pbix`.
 
 | KPI | Visual | What it shows |
 |---|---|---|
@@ -91,6 +88,8 @@ Power BI connects through **ODBC to `storage/happiness.db`** (not CSV files) and
 | Stream quality | Bar chart + table (page 2) | Events per processing status and the reason for each rejection |
 
 **Requirements to open the `.pbix`:** the 64-bit *SQLite3 ODBC Driver* and a user DSN named `happiness_dw` pointing to `storage/happiness.db`. With the consumer stopped, click Home → Refresh. The same queries are available in plain SQL in `sql/kpis.sql`.
+
+**Connection steps:** install the 64-bit SQLite3 ODBC Driver → open "ODBC Data Sources (64-bit)" → User DSN → Add → *SQLite3 ODBC Driver* → Data Source Name `happiness_dw`, Database Name = full path to `storage/happiness.db`. In Power BI Desktop: Get data → ODBC → `happiness_dw` (no username or password) → load `vw_predictions` and `vw_event_status`.
 
 ## 7. How to run
 
@@ -130,7 +129,7 @@ To start from scratch: delete `storage/happiness.db`, run `docker compose down` 
 ```
 data/{raw,processed,streaming}   notebooks/{eda,model_training}.ipynb   kafka/{producer,consumer,contract,db}.py
 models/{model.pkl,features.json,metrics.json}   sql/{create_tables,kpis}.sql
-dashboards/powerbi/{GUIA_POWERBI.md,measures.dax,happiness_dashboard.pbix}
+dashboards/powerbi/{measures.dax,workshop3.pbix}
 docker-compose.yml   requirements.txt   README.md
 ```
 
