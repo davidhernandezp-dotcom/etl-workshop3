@@ -1,0 +1,15 @@
+// Medidas DAX (crear en la tabla vw_predictions: Inicio > Nueva medida)
+
+Predicciones = COUNTROWS(vw_predictions)
+
+MAE = AVERAGE(vw_predictions[abs_error])
+
+RMSE = SQRT(AVERAGEX(vw_predictions, vw_predictions[prediction_error] ^ 2))
+
+Sesgo promedio = AVERAGE(vw_predictions[prediction_error])
+
+Eventos rechazados =
+CALCULATE(
+    COUNTROWS(vw_event_status),
+    vw_event_status[processing_status] <> "VALID"
+)

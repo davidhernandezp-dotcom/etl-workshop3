@@ -1,0 +1,12 @@
+{
+  "features": [
+    "gdp",
+    "family",
+    "health",
+    "freedom",
+    "generosity",
+    "corruption"
+  ],
+  "target": "happiness_score",
+  "model": "RandomForestRegressor"
+}
